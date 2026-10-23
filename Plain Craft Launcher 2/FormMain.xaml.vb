@@ -428,7 +428,8 @@ Public Class FormMain
                 Thread.Sleep(100)
                 DlClientListMojangLoader.Start(1) 'PCL 会同时根据这里的加载结果决定是否使用官方源进行下载
                 RunCountSub()
-                ServerLoader.Start()
+                '复用启动器更新设置：关闭时不在启动阶段拉取更新配置。
+                If Settings.Get(Of Integer)("SystemSystemUpdate") <> 3 Then ServerLoader.Start()
                 RunInNewThread(AddressOf TryClearTaskTemp, "TryClearTaskTemp", ThreadPriority.BelowNormal)
             Catch ex As Exception
                 Logger.Error(ex, "初始化加载池运行失败")
